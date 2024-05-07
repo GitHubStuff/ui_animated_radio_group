@@ -36,3 +36,7 @@ Contributions to enhance the components or add new features are welcome. Please 
 ## License
 
 All components in this repository are licensed under the MIT License. For more details, see the `LICENSE` file in the root directory of the repository.
+
+## Finally
+
+Be kind to each other!
