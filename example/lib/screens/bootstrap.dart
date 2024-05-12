@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         break;
     }
     return MaterialApp(
-      title: 'Flutter Demo ${themeMode.name}',
+      title: 'Animated Buttons ${themeMode.name}',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,

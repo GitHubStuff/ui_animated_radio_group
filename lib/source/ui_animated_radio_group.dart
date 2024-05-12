@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:ui_animated_radio_group/source/ui_animated_radio_button.dart';
+import 'package:ui_animated_radio_group/source/ui_dual_color_radio_image.dart';
 
-part 'rail_painter.dart';
+import 'radio_buttom_group_theme.dart';
+import 'radio_group_theme_data.dart';
+
+part '_rail_painter.dart';
 
 class UIAnimatedRadioGroup extends StatefulWidget {
-  static const double minDiameter = 14.0;
-  static const Duration defaultAnimationDuration = Duration(milliseconds: 200);
-  static const Color defaultColor = Colors.black;
+  // Define default values for properties
+  static const double minDiameter = 22.0;
+  static const Duration defaultAnimationDuration = Duration(milliseconds: 1200);
+  static const Color defaultCircleColor = Colors.orange;
   static const Color defaultTravelColor = Colors.green;
   static const double defaultRailGap = 1.0;
   static const double defaultRailStroke = 1.5;
   static const Curve defaultCurve = Curves.decelerate;
-  // AnimatedAlign uses -1.0 to 1.0, start is -1.0
-  static const double animatedAlignStart = -1.0;
+  static const double animatedAlignStart = -1.0; // AnimatedAlign start
 
+  final Color? circleColor; // Make color properties nullable
+  final Color? railColor;
+  final Color? ringColor;
+  final Color? travelColor;
+  final Curve animationCurve;
   final double circleDiameter;
-  final int buttonCount;
-  final Function(int) onSelected;
-  final int startingIndex;
   final double railGap;
-  final Color circleColor;
-  final Color railColor;
-  final Color ringColor;
-  final Color travelColor;
   final double railStroke;
   final Duration animationDuration;
-  final Curve animationCurve;
+  final Function(int) onSelected;
+  final int buttonCount;
+  final int startingIndex;
 
   const UIAnimatedRadioGroup({
     super.key,
@@ -33,16 +36,16 @@ class UIAnimatedRadioGroup extends StatefulWidget {
     required this.onSelected,
     this.animationCurve = defaultCurve,
     this.animationDuration = defaultAnimationDuration,
-    this.circleColor = defaultColor,
+    this.circleColor, // Update color properties to be nullable
     this.circleDiameter = minDiameter,
-    this.railColor = defaultColor,
+    this.railColor,
     this.railGap = defaultRailGap,
     this.railStroke = defaultRailStroke,
-    this.ringColor = defaultColor,
+    this.ringColor,
     this.startingIndex = 0,
-    this.travelColor = defaultTravelColor,
+    this.travelColor,
   })  : assert(circleDiameter >= minDiameter,
-            'Diameter must be at least $minDiameter.'),
+            'Diameter $circleDiameter must be at least $minDiameter.'),
         assert(animationDuration >= Duration.zero,
             'Animation duration must be positive.'),
         assert(startingIndex >= 0 && startingIndex < buttonCount,
@@ -54,17 +57,16 @@ class UIAnimatedRadioGroup extends StatefulWidget {
 }
 
 class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
-  static const double yAlignment = 0.0;
   late int selectedIndex;
-  late Color selectionColor;
+  Color? selectionColor;
   late double distanceBetweenButtonsAsPct;
   late List<Widget> circles;
+  RadioGroupThemeData? themeData;
 
   @override
   void initState() {
     super.initState();
     selectedIndex = widget.startingIndex;
-    selectionColor = widget.circleColor;
     distanceBetweenButtonsAsPct = 2.0 / (widget.buttonCount - 1.0);
     circles = List.generate(widget.buttonCount, (index) => _buildCircle(index));
   }
@@ -75,12 +77,16 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
         setState(() {
           selectedIndex = index;
           widget.onSelected(index);
-          selectionColor = widget.travelColor;
+          selectionColor = themeData?.travelColor ??
+              widget.travelColor ??
+              UIAnimatedRadioGroup.defaultTravelColor;
         });
       },
-      child: UIAnimatedRadioButton(
+      child: UIDualColorRadioImage(
         diameter: widget.circleDiameter,
-        ringColor: widget.ringColor,
+        ringColor: themeData?.ringColor ??
+            widget.ringColor ??
+            UIAnimatedRadioGroup.defaultCircleColor,
       ),
     );
   }
@@ -88,6 +94,10 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
   @override
   Widget build(BuildContext context) {
     final xPos = -1.0 + selectedIndex * distanceBetweenButtonsAsPct;
+    themeData ??= RadioButtonGroupTheme.of(context);
+    selectionColor ??= themeData?.circleColor ??
+        widget.circleColor ??
+        UIAnimatedRadioGroup.defaultCircleColor;
 
     return Stack(
       alignment: Alignment.center,
@@ -99,7 +109,9 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
                 widget.buttonCount,
                 iconDiameter: widget.circleDiameter,
                 gap: widget.railGap,
-                railColor: widget.railColor,
+                railColor: themeData?.railColor ??
+                    widget.railColor ??
+                    UIAnimatedRadioGroup.defaultCircleColor,
                 stroke: widget.railStroke,
               ),
             ),
@@ -110,14 +122,17 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
           children: circles,
         ),
         AnimatedAlign(
-          alignment: Alignment(xPos, yAlignment),
-          onEnd: () => setState(() => selectionColor = widget.circleColor),
+          alignment: Alignment(xPos, UIAnimatedRadioGroup.animatedAlignStart),
+          onEnd: () => setState(() => selectionColor =
+              (themeData?.circleColor ??
+                  widget.circleColor ??
+                  UIAnimatedRadioGroup.defaultCircleColor)),
           curve: widget.animationCurve,
           duration: widget.animationDuration,
-          child: UIAnimatedRadioButton(
+          child: UIDualColorRadioImage(
             diameter: widget.circleDiameter,
             ringColor: Colors.transparent,
-            circleColor: selectionColor,
+            circleColor: selectionColor!,
           ),
         ),
       ],
