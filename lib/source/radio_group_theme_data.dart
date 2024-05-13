@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RadioGroupThemeData {
+class RadioGroupThemeData extends ThemeExtension<RadioGroupThemeData> {
   static RadioGroupThemeData darkThemeData = const RadioGroupThemeData(
     circleColor: Color(0xFF00ACC1), // Cyan
     railColor: Color(0xFF007C91), // Dark cyan
@@ -35,4 +35,31 @@ class RadioGroupThemeData {
     required this.ringColor,
     required this.travelColor,
   });
+
+  @override
+  ThemeExtension<RadioGroupThemeData> copyWith({
+    Color? circleColor,
+    Color? railColor,
+    Color? ringColor,
+    Color? travelColor,
+  }) {
+    return RadioGroupThemeData(
+      circleColor: circleColor ?? this.circleColor,
+      railColor: railColor ?? this.railColor,
+      ringColor: ringColor ?? this.ringColor,
+      travelColor: travelColor ?? this.travelColor,
+    );
+  }
+
+  @override
+  RadioGroupThemeData lerp(
+      ThemeExtension<RadioGroupThemeData>? other, double t) {
+    if (other is! RadioGroupThemeData) return this;
+    return RadioGroupThemeData(
+      circleColor: Color.lerp(circleColor, other.circleColor, t)!,
+      railColor: Color.lerp(railColor, other.railColor, t)!,
+      ringColor: Color.lerp(ringColor, other.ringColor, t)!,
+      travelColor: Color.lerp(travelColor, other.travelColor, t)!,
+    );
+  }
 }

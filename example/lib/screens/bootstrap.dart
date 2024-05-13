@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Animated Buttons ${themeMode.name}',
       theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.dark().copyWith(extensions: [
+        //RadioGroupThemeData.lightThemeData,
+      ]),
       themeMode: themeMode,
       localizationsDelegates: const [],
       home: InitialScreen(title: 'Flutter Demo ${themeMode.name} mode'),

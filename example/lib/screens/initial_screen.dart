@@ -42,18 +42,27 @@ class InitialScreen extends StatelessWidget {
             ),
           ),
           const Gap(4.0),
-          RadioButtonGroupTheme(
-            data: RadioGroupThemeData.impairedThemeData,
-            child: Center(
-              child: UIAnimatedRadioGroup(
-                buttonCount: 3,
-                onSelected: (index) {
-                  debugPrint('🔘 index: $index');
-                },
-                // your UIAnimatedRadioGroup properties
-              ),
+          Center(
+            child: UIAnimatedRadioGroup(
+              buttonCount: 3,
+              onSelected: (index) {
+                debugPrint('🔘 index: $index');
+              },
+              // your UIAnimatedRadioGroup properties
             ),
           ),
+          //RadioButtonGroupTheme(
+          //   data: RadioGroupThemeData.impairedThemeData,
+          //   child: Center(
+          //     child: UIAnimatedRadioGroup(
+          //       buttonCount: 3,
+          //       onSelected: (index) {
+          //         debugPrint('🔘 index: $index');
+          //       },
+          //       // your UIAnimatedRadioGroup properties
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
