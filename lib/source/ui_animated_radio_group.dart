@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ui_animated_radio_group/source/ui_dual_color_radio_image.dart';
 
-import 'radio_buttom_group_theme.dart';
-import 'radio_group_theme_data.dart';
+import 'radio_button_group/radio_buttom_group_theme.dart';
+import 'radio_button_group/radio_group_theme_data.dart';
 
-part '_rail_painter.dart';
+part 'radio_button_group/_rail_painter.dart';
 
 class UIAnimatedRadioGroup extends StatefulWidget {
   // Define default values for properties

@@ -1,4 +1,4 @@
-part of 'ui_animated_radio_group.dart';
+part of '../ui_animated_radio_group.dart';
 
 class _RailPainter extends CustomPainter {
   final int choices;

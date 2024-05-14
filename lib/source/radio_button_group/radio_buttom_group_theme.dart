@@ -3,6 +3,7 @@ import 'package:ui_extensions_flutter/ui_extensions_flutter.dart';
 
 import 'radio_group_theme_data.dart';
 
+/// Custom theme for RadioButtonGroup
 class RadioButtonGroupTheme extends InheritedTheme {
   final RadioGroupThemeData data;
 
