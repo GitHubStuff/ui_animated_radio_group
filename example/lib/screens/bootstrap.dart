@@ -1,5 +1,8 @@
+import 'package:logger/logger.dart';
 import 'package:radio_button_demo/screens/initial_screen.dart';
 import 'package:flutter/material.dart';
+
+var _logger = Logger();
 
 void bootStrap(ThemeMode themeMode) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,13 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (themeMode) {
       case ThemeMode.light:
-        debugPrint('💡 ThemeMode.light');
+        _logger.i('💡 ThemeMode.light');
         break;
       case ThemeMode.dark:
-        debugPrint('🌛 ThemeMode.dark');
+        _logger.i('🌛 ThemeMode.dark');
         break;
       case ThemeMode.system:
-        debugPrint('📲 ThemeMode.system');
+        _logger.i('📲 ThemeMode.system');
         break;
     }
     return MaterialApp(

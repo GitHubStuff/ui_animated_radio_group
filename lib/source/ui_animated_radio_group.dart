@@ -77,15 +77,15 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
         setState(() {
           selectedIndex = index;
           widget.onSelected(index);
-          selectionColor = themeData?.travelColor ??
-              widget.travelColor ??
+          selectionColor = widget.travelColor ??
+              themeData?.travelColor ??
               UIAnimatedRadioGroup.defaultTravelColor;
         });
       },
       child: UIDualColorRadioImage(
         diameter: widget.circleDiameter,
-        ringColor: themeData?.ringColor ??
-            widget.ringColor ??
+        ringColor: widget.ringColor ??
+            themeData?.ringColor ??
             UIAnimatedRadioGroup.defaultCircleColor,
       ),
     );
@@ -95,8 +95,8 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
   Widget build(BuildContext context) {
     final xPos = -1.0 + selectedIndex * distanceBetweenButtonsAsPct;
     themeData ??= RadioButtonGroupTheme.of(context);
-    selectionColor ??= themeData?.circleColor ??
-        widget.circleColor ??
+    selectionColor ??= widget.circleColor ??
+        themeData?.circleColor ??
         UIAnimatedRadioGroup.defaultCircleColor;
 
     return Stack(
@@ -109,8 +109,8 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
                 widget.buttonCount,
                 iconDiameter: widget.circleDiameter,
                 gap: widget.railGap,
-                railColor: themeData?.railColor ??
-                    widget.railColor ??
+                railColor: widget.railColor ??
+                    themeData?.railColor ??
                     UIAnimatedRadioGroup.defaultCircleColor,
                 stroke: widget.railStroke,
               ),
@@ -123,10 +123,9 @@ class _UIAnimatedRadioGroupState extends State<UIAnimatedRadioGroup> {
         ),
         AnimatedAlign(
           alignment: Alignment(xPos, UIAnimatedRadioGroup.animatedAlignStart),
-          onEnd: () => setState(() => selectionColor =
-              (themeData?.circleColor ??
-                  widget.circleColor ??
-                  UIAnimatedRadioGroup.defaultCircleColor)),
+          onEnd: () => setState(() => selectionColor = (widget.circleColor ??
+              themeData?.circleColor ??
+              UIAnimatedRadioGroup.defaultCircleColor)),
           curve: widget.animationCurve,
           duration: widget.animationDuration,
           child: UIDualColorRadioImage(

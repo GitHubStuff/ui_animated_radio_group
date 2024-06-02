@@ -43,7 +43,7 @@ Example:
 UIAnimatedRadioGroup(
   buttonCount: 3,
   onSelected: (index) {
-    debugPrint("Selected: $index");
+    // Zero(0) base
   },
   circleDiameter: 20.0,
   railColor: Colors.grey,

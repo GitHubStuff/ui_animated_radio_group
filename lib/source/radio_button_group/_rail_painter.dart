@@ -36,8 +36,6 @@ class _RailPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    debugPrint('PAINTING');
-
     /// Cache the points
     _calculatePoints(size);
     final paint = Paint()

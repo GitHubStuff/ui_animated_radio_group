@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:logger/logger.dart';
 import 'package:ui_animated_radio_group/ui_animated_radio_group.dart';
 import 'package:ui_extensions_flutter/ui_extensions_flutter.dart';
 
 import '../gen/assets.gen.dart';
+
+var _logger = Logger();
 
 class InitialScreen extends StatelessWidget {
   final String title;
@@ -107,7 +110,7 @@ class InitialScreen extends StatelessWidget {
             child: UIAnimatedRadioGroup(
               buttonCount: 3,
               onSelected: (index) {
-                debugPrint('🔘 index: $index');
+                _logger.i('🔘 index: $index');
               },
               // your UIAnimatedRadioGroup properties
             ),
